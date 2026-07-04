@@ -1,0 +1,14 @@
+.card {
+    flex-basis: 350px;
+    margin: 10px;
+}
+
+.card-image {
+    max-width: 100%;
+    height: 300px;
+    border-radius: 5px;
+}
+
+.card-content {
+    text-align: center;
+}
