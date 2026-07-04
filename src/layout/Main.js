@@ -1,6 +1,8 @@
 import './Main.css';
 import React from 'react';
 import MusicList from '../components/MusicList';
+import Search from '../components/Search';
+
 
 class Main extends React.Component 
 {
@@ -8,20 +10,26 @@ class Main extends React.Component
         musix: []
     };
     componentDidMount() {
-        fetch('https://itunes.apple.com/search?term=the+beatles&entity=album&limit=5') // Replace with your actual API endpoint
+        fetch('https://itunes.apple.com/search?term=the+beatles&entity=album&limit=5') 
             .then(response => response.json())
             .then(data => this.setState({ musix: data.results }));
     }
-
+    searchMusic = (searchTerm) => {
+        fetch(`https://itunes.apple.com/search?term=${searchTerm}&entity=album&limit=5`)
+            .then(response => response.json())
+            .then(data => this.setState({ musix: data.results }));
+    }
     render() {
         const { musix } = this.state;
         return (
-            <div className="main">{
-                musix.length ? (
+            <div className="main">
+                <Search searchMusic={this.searchMusic} />
+                {
+                musix == null ? <h3>Error...</h3> : musix.length ? 
                     <MusicList musix={musix} />
-                ) : (
+                 : 
                     <h3>Loading...</h3>
-                )
+                
             }
             </div>
         );
